@@ -1,15 +1,21 @@
 <?php
 session_start();
 
-// If session not active, redirect to login
-if (!isset($_SESSION['role'])) {
-    $_SESSION['error'] = "⚠️ Session expired. Please login again.";
-    header("Location: ../../auth.php");
+// Session timeout in seconds (10 minutes)
+$timeout_duration = 600;
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /college-management/index.php");
     exit();
 }
 
-// Prevent browser cache so back button doesn't reopen
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: 0");
+// Check session timeout
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $timeout_duration) {
+    session_unset();
+    session_destroy();
+    header("Location: /college-management/index.php?timeout=1");
+    exit();
+}
+
+$_SESSION['last_activity'] = time(); // Update last activity
 ?>
