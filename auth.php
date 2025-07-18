@@ -101,7 +101,7 @@ if (isset($_POST['register'])) {
       </p>
     </div>
 
-    <!-- Register Form -->
+    <!-- Register -->
     <div id="registerForm" class="hidden">
       <h2 class="text-2xl font-bold text-blue-700 mb-4">Register</h2>
       <?php if ($register_success) echo "<p class='text-green-600 mb-2'>$register_success</p>"; ?>
